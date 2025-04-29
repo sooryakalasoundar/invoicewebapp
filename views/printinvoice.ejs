@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice</title>
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <style>
+    @media print {
+      body, html {
+        margin: 0;
+        padding: 0;
+      }
+      .row, .col-6, .col-md-6 {
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+      }
+      h1, h2, h4, h6, p, span {
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1.2 !important;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      .no-print {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="py-3 py-md-5">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <img src="/i1.png" alt="Company Logo" width="180">
+        <h2>Invoice</h2>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-12 col-sm-6 col-md-8">
+          <h4>Bill To</h4>
+          <h6><%= invoice.invoice_to %></h6>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4">
+          <h6 class="row">
+            <span class="col-6">Invoice #</span>
+            <span class="col-6 text-sm-end"><%= invoice.invoice_id %></span>
+          </h6>
+          <div class="row">
+            <span class="col-6">Invoice Date</span>
+            <span class="col-6 text-sm-end">
+              <%= invoice.inv_date ? invoice.inv_date.toLocaleDateString().split('T')[0] : 'N/A' %>
+                <!-- <%= invoice.inv_date%> -->
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table table-success">
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Quantity</th>
+                  <th class="text-end">Rate Per</th>
+                  <th class="text-end">Amount</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider">
+                <% items.forEach(item => { %>
+                <tr>
+                  <td><%= item.details %></td>
+                  <td><%= item.quantity %></td>
+                  <td class="text-end"><%= item.rate_per %></td>
+                  <td class="text-end"><%= item.total %></td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 text-end">
+          <h4>Total: ₹<%= invoice.final_total %></h4>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 text-end no-print">
+          <button onclick="window.print()" class="btn btn-primary mb-3">Print Invoice</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

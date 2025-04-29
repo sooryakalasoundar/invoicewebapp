@@ -1,0 +1,42 @@
+<!-- views/form.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Invoice</title>
+  <script>
+    //to add a row of data
+    function addRow() {
+      const row = document.createElement('div');
+      row.innerHTML = `
+        <input name="details[]" placeholder="Details" required />
+        <input name="quantity[]" type="number" placeholder="Qty" required />
+        <input name="rate_per[]" type="number" step="0.01" placeholder="Rate" required />
+        <br/>
+      `;
+      document.getElementById('items').appendChild(row);
+    }
+    //to cancel the invoice creation 
+    function toCancel(){
+        window.location.href='/homepage';
+    
+    }
+  </script>
+</head>
+<body>
+  <h1>Create Invoice</h1>
+  <form action="/invoices" method="POST">
+    <label>Invoice To: <input name="invoice_to" required /></label><br/>
+    <label>Date: <input type="date" name="inv_date" required /></label><br/>
+    <h3>Items</h3>
+    <div id="items">
+      <input name="details[]" placeholder="Details" required />
+      <input name="quantity[]" type="number" placeholder="Qty" required />
+      <input name="rate_per[]" type="number" step="0.01" placeholder="Rate" required />
+      <button type="button" onclick="addRow()">Add Item</button><br/><br/>
+      
+    </div>
+    <button type="submit">Create Invoice</button>
+    <button type="button" onClick="toCancel()">CANCEL</button>
+  </form>
+</body>
+</html>

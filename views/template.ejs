@@ -1,0 +1,37 @@
+﻿<!-- views/invoiceView.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Invoice</title>
+</head>
+<body>
+  <h2>Invoice: <%= invoice.invoice_id %></h2>
+  <p><strong>To:</strong> <%= invoice.invoice_to %></p>
+  <p><strong>Date:</strong> <%= invoice.inv_date ? invoice.inv_date.toLocaleDateString().split('T')[0] : 'N/A' %></p>
+
+  <h3>Items</h3>
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>Details</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% items.forEach(item => { %>
+        <tr>
+          <td><%= item.details %></td>
+          <td><%= item.quantity %></td>
+          <td><%= item.rate_per %></td>
+          <td><%= item.total %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <h3>Final Total: ₹<%= invoice.final_total %></h3>
+  <br/>
+  <a href="/invoices">Back to Invoices</a>
+</body>
+</html>

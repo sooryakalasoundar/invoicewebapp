@@ -1,0 +1,44 @@
+<!-- views/invoices.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>All Invoices</title>
+</head>
+<body>
+     
+  <h1>Invoices</h1>
+  <!-- <a href="/create">Create New Invoice</a> -->
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>Invoice ID</th>
+        <th>To</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% invoices.forEach(invoice => { %>
+        <tr>
+          <td><%= invoice.invoice_id %></td>
+          <td><%= invoice.invoice_to %></td>
+         <!-- <td><%= invoice.inv_date %></td> -->
+          <td><%= invoice.inv_date?.toLocaleDateString().split('T')[0] || 'N/A' %></td> 
+          <td>
+            <a href="/invoices/<%= invoice.id %>/edit">Edit</a> |
+            <a href="/invoices/<%= invoice.id %>">View</a> |
+            <a href="/printinvoice/<%= invoice.id %>">Download PDF</a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table> <br>
+  <button type="button" onClick="goHome()">HOME</button>
+  <script>
+   function goHome(){
+        window.location.href='/homepage';
+    }
+  </script>
+
+</body>
+</html>
