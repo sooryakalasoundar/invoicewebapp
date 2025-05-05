@@ -29,6 +29,16 @@ exports.createInvoice = async (invoice_id, invoice_to, inv_date) => {
 exports.addInvoiceItem = async (invoice_id, details, quantity, rate_per) => {
   const total = quantity * rate_per;
   await db.query('INSERT INTO tbl_invoiceitems (invoice_id, details, quantity, rate_per, total) VALUES (?, ?, ?, ?, ?)', [invoice_id, details, quantity, rate_per, total]);
+    await db.query(`
+  UPDATE tbl_invoiceid
+  SET final_total = (
+    SELECT IFNULL(SUM(total), 0)
+    FROM tbl_invoiceitems
+    WHERE invoice_id = ?
+  )
+  WHERE id = ?
+`, [invoice_id, invoice_id]);  
+  
 };
 
 // Update an invoice
